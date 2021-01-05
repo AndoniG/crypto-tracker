@@ -1,14 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-} from 'react-native';
+import {View, StyleSheet, FlatList, ActivityIndicator} from 'react-native';
 import Http from '../../libs/http';
 import CoinsItem from './CoinsItem';
+import Colors from '../../res/colors';
 
 const CoinsScreen = (props) => {
   const [coins, setCoins] = useState([]);
@@ -35,9 +29,8 @@ const CoinsScreen = (props) => {
     fetchCoins();
   }, []);
 
-  const handlePress = () => {
-    console.log('Go to detail', props);
-    props.navigation.navigate('CoinDetail');
+  const handlePress = (coin) => {
+    props.navigation.navigate('CoinDetail', {coin});
   };
 
   return (
@@ -47,7 +40,9 @@ const CoinsScreen = (props) => {
       ) : (
         <FlatList
           data={coins}
-          renderItem={({item}) => <CoinsItem item={item} />}
+          renderItem={({item}) => (
+            <CoinsItem item={item} onPress={() => handlePress(item)} />
+          )}
         />
       )}
     </View>
@@ -57,6 +52,7 @@ const CoinsScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.charade,
   },
   button: {
     padding: 8,
