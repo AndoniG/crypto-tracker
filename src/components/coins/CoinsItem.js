@@ -11,7 +11,7 @@ const CoinsItem = ({item, onPress}) => {
         <Text style={styles.symbolText} adjustsFontSizeToFit>
           {item.symbol}
         </Text>
-        <Text style={styles.nameText} adjustsFontSizeToFit>
+        <Text style={styles.nameText} ellipsizeMode="tail" numberOfLines={1}>
           {item.name}
         </Text>
         <Text
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 12,
     marginRight: 16,
+    maxWidth: 150,
   },
   priceText: {
     color: '#fff',

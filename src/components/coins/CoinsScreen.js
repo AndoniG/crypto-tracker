@@ -3,9 +3,11 @@ import {View, StyleSheet, FlatList, ActivityIndicator} from 'react-native';
 import Http from '../../libs/http';
 import CoinsItem from './CoinsItem';
 import Colors from '../../res/colors';
+import CoinsSearch from './CoinsSearch';
 
 const CoinsScreen = (props) => {
   const [coins, setCoins] = useState([]);
+  const [filteredCoins, setFilteredCoins] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,6 +21,7 @@ const CoinsScreen = (props) => {
         }
 
         setCoins(coins.data.data);
+        setFilteredCoins(coins.data.data);
         setLoading(false);
       } catch (e) {
         console.log(e.message);
@@ -33,13 +36,25 @@ const CoinsScreen = (props) => {
     props.navigation.navigate('CoinDetail', {coin});
   };
 
+  const handleSearch = (query) => {
+    const filtered = coins.filter((coin) => {
+      return (
+        coin.name.toLowerCase().includes(query.toLowerCase()) ||
+        coin.symbol.toLowerCase().includes(query.toLowerCase())
+      );
+    });
+
+    setFilteredCoins(filtered);
+  };
+
   return (
     <View style={styles.container}>
+      <CoinsSearch onChange={handleSearch} />
       {loading ? (
         <ActivityIndicator color="#fff" size="large" style={styles.loader} />
       ) : (
         <FlatList
-          data={coins}
+          data={filteredCoins}
           renderItem={({item}) => (
             <CoinsItem item={item} onPress={() => handlePress(item)} />
           )}
