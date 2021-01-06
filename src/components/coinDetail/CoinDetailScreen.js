@@ -85,7 +85,6 @@ const CoinDetailScreen = (props) => {
     try {
       const key = `favorite-${coinId}`;
       const favStr = await storage.get(key);
-      console.log(favStr.data);
 
       if (favStr.data !== null) {
         setIsFavorite(true);

@@ -6,19 +6,19 @@ import CoinsStack from './src/components/coins/CoinsStack';
 import FavoritesStack from './src/components/favorites/FavoritesStack';
 import colors from './src/res/colors';
 
-const Tabs = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Tabs.Navigator
+      <Tab.Navigator
         tabBarOptions={{
           tintColor: '#fefefe',
           style: {
             backgroundColor: colors.blackPearl,
           },
         }}>
-        <Tabs.Screen
+        <Tab.Screen
           name="Coins"
           component={CoinsStack}
           options={{
@@ -29,8 +29,12 @@ const App = () => {
               />
             ),
           }}
+          listeners={({navigation, route}) => ({
+            tabPress: () => navigation.navigate('Coins'),
+            tabLongPress: () => navigation.navigate('Coins'),
+          })}
         />
-        <Tabs.Screen
+        <Tab.Screen
           name="Favorites"
           component={FavoritesStack}
           options={{
@@ -41,8 +45,12 @@ const App = () => {
               />
             ),
           }}
+          listeners={({navigation, route}) => ({
+            tabPress: () => navigation.navigate('Favorites'),
+            tabLongPress: () => navigation.navigate('Favorites'),
+          })}
         />
-      </Tabs.Navigator>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
